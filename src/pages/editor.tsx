@@ -60,7 +60,7 @@ const Preview = styled.div`
 const StorageKey = 'pages/editor:text'
 
 export const Editor: React.FC = () => {
-    const [text, setText] = useState<string>(localStorage.getItem(StorageKey) || '')
+    const [text, setText] = useStateWithStorage('' ,StorageKey)
 
     const saveMemo = (): void => {
         putMemo('TITLE', text)
@@ -77,11 +77,7 @@ export const Editor: React.FC = () => {
             </Header>
             <Wrapper>
                 <TextArea
-                  onChange={(event) => {
-                      const changedText = event.target.value
-                      localStorage.setItem(StorageKey, changedText)
-                      setText(changedText)
-                  }}
+                  onChange={(event) => setText(event.target.value)}
                   value={text}
                 />
                 <Preview>
