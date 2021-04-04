@@ -4,6 +4,7 @@ import { useStateWithStorage } from '../hooks/use_state_with_storage'
 import * as ReactMarkdown from 'react-markdown'
 import { putMemo } from '../indexeddb/memos'
 import { Button } from '../components/button'
+import { SaveModal } from '../components/save_modal'
 
 
 const { useState } = React
@@ -61,16 +62,15 @@ const StorageKey = 'pages/editor:text'
 
 export const Editor: React.FC = () => {
     const [text, setText] = useStateWithStorage('' ,StorageKey)
+    //モーダル表示のフラグ。デフォルトはfalse
+    const [showModal, setShowModal] = useState(false)
 
-    const saveMemo = (): void => {
-        putMemo('TITLE', text)
-    }
     return(
         <>
             <Header>
                 Markdown Editor
                 <HeaderControl>
-                    <Button onClick={saveMemo}>
+                    <Button onClick={() => setShowModal(true)}>
                         保存する
                     </Button>
                 </HeaderControl>
@@ -84,6 +84,16 @@ export const Editor: React.FC = () => {
                     <ReactMarkdown source={text} />
                 </Preview>
             </Wrapper>
+            {/* showModalがtrueの場合は&&以降の処理が実行される */}
+            {showModal && (
+                <SaveModal
+                    onSave={(title: string): void =>{
+                        putMemo(title, text)
+                        setShowModal(false)
+                    }}
+                    onCancel={() => setShowModal(false)}
+                    />
+            )}
         </>
     )
 }
