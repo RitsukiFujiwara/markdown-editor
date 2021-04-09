@@ -137,6 +137,7 @@ export const History: React.FC<Props> = (props)=>{
             onClick={() => movePage(page + 1)}
             disabled={!canNextPage}
           >
+            
             ＞
           </PagingButton>
         </Paging>
