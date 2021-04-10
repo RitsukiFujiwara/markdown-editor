@@ -3,8 +3,8 @@ import {
     Link,
     useHistory,
   } from 'react-router-dom'
-  import styled from 'styled-components'
-  import { Header } from '../components/header'
+import styled from 'styled-components'
+import { Header } from '../components/header'
 import { useStateWithStorage } from '../hooks/use_state_with_storage'
   import {
       getMemoPageCount,
@@ -137,7 +137,7 @@ export const History: React.FC<Props> = (props)=>{
             onClick={() => movePage(page + 1)}
             disabled={!canNextPage}
           >
-            
+
             ＞
           </PagingButton>
         </Paging>
